@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>CrazyChat</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body { background: #0f172a; }
+    .msg { animation: pop 0.2s ease-out; }
+    @keyframes pop {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body class="h-screen flex flex-col text-white">
+
+  <!-- Header -->
+  <header class="p-4 font-bold text-xl">CrazyChat</header>
+
+  <!-- Chat area -->
+  <main id="chatArea" class="flex-1 overflow-hidden relative">
+    <div id="messages" class="absolute bottom-0 w-full flex flex-col-reverse p-4 space-y-2 space-y-reverse"></div>
+  </main>
+
+  <!-- Input area -->
+  <footer class="p-4 bg-slate-800 flex gap-2">
+    <input id="pseudo" type="text" placeholder="Pseudo"
+           class="w-32 px-2 py-1 rounded bg-slate-700 text-sm" />
+    <input id="message" type="text" placeholder="Message..."
+           class="flex-1 px-2 py-1 rounded bg-slate-700 text-sm" />
+    <button id="sendBtn"
+            class="px-4 py-1 bg-emerald-500 hover:bg-emerald-400 rounded font-semibold">Envoyer</button>
+  </footer>
+
+<script>
+const messagesEl = document.getElementById("messages");
+const pseudoEl = document.getElementById("pseudo");
+const messageEl = document.getElementById("message");
+const sendBtn = document.getElementById("sendBtn");
+
+// Phrases aléatoires
+const randoms = [
+  "Qui a mangé tous les cookies ? 🍪",
+  "Erreur 404: cerveau introuvable 🤯",
+  "Alture Corp recrute des pigeons 🐦",
+  "Je tape plus vite que mon ombre ⚡",
+  "Qui veut un café gratuit ? ☕",
+  "Mode turbo activé 🚀",
+  "Je parle à 100 km/h 🗯️",
+  "Wesh la commu 🫡",
+  "CrazyChat >>> WhatsApp 😎",
+  "Fin du monde à 20h, ramenez les chips 🌍🔥",
+  "BONJOUR LES GENS",
+  "Ça va trop vite !!!!!!!!!!!!"
+];
+
+// Fonction pour ajouter un message
+function addMessage(author, text) {
+  const div = document.createElement("div");
+  div.className = "msg bg-slate-700/70 px-3 py-1 rounded mb-2";
+  div.innerHTML = `<span class="font-bold">${author}:</span> ${text}`;
+  messagesEl.prepend(div);
+
+  // garde max 50 messages
+  if (messagesEl.children.length > 50) {
+    messagesEl.removeChild(messagesEl.lastChild);
+  }
+}
+
+// Auto défilement rapide (message aléatoire toutes les 300ms)
+setInterval(() => {
+  const txt = randoms[Math.floor(Math.random()*randoms.length)];
+  addMessage("BOT", txt);
+}, 200);
+
+// Bouton envoyer
+sendBtn.addEventListener("click", () => {
+  const pseudo = pseudoEl.value.trim() || "Moi";
+  const text = messageEl.value.trim();
+  if (!text) return;
+  addMessage(pseudo, text);
+  messageEl.value = "";
+});
+</script>
+
+</body>
+</html>
