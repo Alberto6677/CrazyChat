@@ -278,7 +278,8 @@ const randoms = [
   "STOP LES BLAGUES NULLES",
   "Ok mais tacos ou pizza",
   "CrazyChat tourne à l’infini",
-  "J’ai un bug dans la matrice"
+  "J’ai un bug dans la matrice",
+  "Wesh les gens !"
 ];
 
 // Fonction pour ajouter un message
@@ -298,7 +299,7 @@ function addMessage(author, text) {
 setInterval(() => {
   const txt = randoms[Math.floor(Math.random()*randoms.length)];
   addMessage("BOT", txt);
-}, 200);
+}, 300);
 
 // Bouton envoyer
 sendBtn.addEventListener("click", () => {
